@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_smart_crm" model="ir.ui.view">
+        <field name="name">res.partner.form.smart.crm</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_address_format')]" position="after">
+                <field name="last_contact_date"/>
+                <field name="total_due_amount"/>
+                <field name="unpaid_invoice_count"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                    <page string="Activities">
+                        <field name="crm_activity_ids">
+                            <list>
+                                <field name="activity_type"/>
+                                <field name="date_time"/>
+                                 <field name="user_id"/>
+                                <field name="text"/>
+                            </list>
+                        </field>
+                    </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
