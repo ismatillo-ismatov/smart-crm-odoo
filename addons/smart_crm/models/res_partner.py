@@ -5,23 +5,18 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     last_contact_date = fields.Date(string="Last contact date")
-    total_due_amount = fields.Monetary(string='Total due amount', compute='_compute_total_due_amount', store=True,currency_field="currency_id")
-    unpaid_invoice_count  = fields.Integer(string='Invoice count',compute='_compute_invoice_count',store=True)
-    crm_activity_ids = fields.One2many('crm.activity','partner_id',string='activities')
-
-
-    @api.depends('invoice_ids.amount_residual', 'invoice_ids.state', 'invoice_ids.payment_state')
-    def _compute_total_due_amount(self):
-        for partner in self:
-            invoices = partner._get_unpaid_invoices()
-            partner.total_due_amount = sum(invoices.mapped('amount_residual'))
+    total_due_amount = fields.Monetary(string='Total due amount', compute='_compute_invoice_stats', store=True,currency_field="currency_id")
+    unpaid_invoice_count = fields.Integer(string='Invoice count',compute='_compute_invoice_stats',store=True)
 
 
     @api.depends('invoice_ids.amount_residual','invoice_ids.state','invoice_ids.payment_state')
-    def _compute_invoice_count(self):
+    def _compute_invoice_stats(self):
         for partner in self:
-            invoice = partner._get_unpaid_invoices()
-            partner.unpaid_invoice_count = len(invoice)
+            invoices = partner._get_unpaid_invoices()
+            partner.total_due_amount = sum(invoices.mapped('amount_residual'))
+            partner.unpaid_invoice_count = len(invoices)
+
+
 
     def _get_unpaid_invoices(self):
         return self.invoice_ids.filtered(

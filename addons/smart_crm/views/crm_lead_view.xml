@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_crm_lead_form_inherit_custom_activity" model="ir.ui.view">
-        <field name="name">crm.lead.form.inherit.custom.activity</field>
+    <record id="view_crm_lead_form_inventory_warning" model="ir.ui.view">
+        <field name="name">crm.lead.form.inventory.warning</field>
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
-        <xpath expr='//notebook' position="inside">
-            <page string="Maxsus Faoliyatlar">
-                <field name="custom_activity_ids" context="{'default_lead_id':id, 'default_partner_id':partner_id}">
-                    <list editable="bottom">
-                        <field name="activity_type"/>
-                        <field name="date_time"/>
-                        <field name="user_id"/>
-                        <field name="text"/>
-                    </list>
-                </field>
-            </page>
-        </xpath>
-      </field>
-
-
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+                <div class="alert alert-danger" role="alert"
+                     invisible="not inventory_warning">
+                    <field name="inventory_warning" widget="html"/>
+                </div>
+            </xpath>
+        </field>
     </record>
+   <record id="view_crm_lead_kanban_inventory_warning" model="ir.ui.view">
+    <field name="name">crm.lead.kanban.inventory.warning</field>
+    <field name="model">crm.lead</field>
+    <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='name']" position="after">
+            <field name="inventory_warning" invisible="1"/>
+            <span invisible="not inventory_warning" class="badge text-bg-danger">
+                Ombor yetishmovchiligi
+            </span>
+        </xpath>
+    </field>
+</record>
 </odoo>

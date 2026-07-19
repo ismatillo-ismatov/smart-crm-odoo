@@ -4,12 +4,11 @@
     'category': 'Sales/CRM',
     'summary': 'Universal CRM with real accounting integration and AI bot',
     'author': 'Ismatillo Ismatov',
-    'depends': ['base', 'mail', 'account', 'contacts','sale'],
+    'depends': ['base', 'mail', 'account', 'contacts','sale','crm'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_partner_views.xml',
-        'views/crm_activity_views.xml',
-        'views/crm_lead_view.xml'
+        'views/crm_lead_view.xml',
     ],
     'installable': True,
     'application': True,
