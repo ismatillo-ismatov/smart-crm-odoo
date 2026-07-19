@@ -1,4 +1,4 @@
-# Smart CRM + AI Bot
+# Smart CRM
 
 Universal CRM system built on **Odoo 19**, demonstrating end-to-end business process integration: CRM → Sales → Invoicing → Purchase → Inventory → Manufacturing (MRP).
 
